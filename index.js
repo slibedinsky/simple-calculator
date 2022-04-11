@@ -5,6 +5,34 @@ let operation = "";
 let inFirstNumber = true;
 let afterEqual = false;
 
+function percentage() {
+  if (inFirstNumber === true) {
+    firstNumber = (Number(firstNumber) / 100).toString();
+    display.innerHTML = firstNumber;
+  } else {
+    secondNumber = (Number(secondNumber) / 100).toString();
+    display.innerHTML = secondNumber;
+  }
+}
+
+function dot() {
+  if (inFirstNumber) {
+    if (firstNumber.includes(".")) {
+      alert("Invalid entry");
+    } else {
+      firstNumber += ".";
+      display.innerHTML = firstNumber;
+    }
+  } else {
+    if (secondNumber.includes(".")) {
+      alert("Invalid entry");
+    } else {
+      secondNumber += ".";
+      display.innerHTML = secondNumber;
+    }
+  }
+}
+
 function plus() {
   if (inFirstNumber === true) {
     inFirstNumber = false;
@@ -90,9 +118,13 @@ function sign() {
     firstNumber = "-" + firstNumber;
     display.innerHTML = firstNumber;
   } else if (inFirstNumber && Number(firstNumber) < 0) {
-    firstNumber = firstNumber;
+    firstNumber = firstNumber.substring(1);
     display.innerHTML = firstNumber;
+  } else if (!inFirstNumber && Number(secondNumber) > 0) {
     secondNumber = "-" + secondNumber;
+    display.innerHTML = secondNumber;
+  } else if (!inFirstNumber && Number(secondNumber) < 0) {
+    secondNumber = secondNumber.substring(1);
     display.innerHTML = secondNumber;
   }
 }
