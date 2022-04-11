@@ -1,18 +1,17 @@
 const display = document.getElementById("display");
-let firstNumber = "";
+let firstNumber = "0";
 let secondNumber = "";
 let operation = "";
 let inFirstNumber = true;
-let afterEqual = false;
+let inSecondNumber = false;
+let inTransition = false;
+let inAfterEqual = false;
 
-function percentage() {
-  if (inFirstNumber === true) {
-    firstNumber = (Number(firstNumber) / 100).toString();
-    display.innerHTML = firstNumber;
-  } else {
-    secondNumber = (Number(secondNumber) / 100).toString();
-    display.innerHTML = secondNumber;
-  }
+display.innerHTML = firstNumber;
+
+//resolving the floating problem that 1+2 = 3.000000000000004
+function toStringToNumberToString(number) {
+  return parseFloat(number.toFixed(10)).toString();
 }
 
 function dot() {
@@ -23,116 +22,179 @@ function dot() {
       firstNumber += ".";
       display.innerHTML = firstNumber;
     }
-  } else {
+  } else if (inSecondNumber) {
     if (secondNumber.includes(".")) {
       alert("Invalid entry");
     } else {
       secondNumber += ".";
       display.innerHTML = secondNumber;
     }
+  } else if (inAfterEqual) {
+    if (firstNumber.includes(".")) {
+      alert("Invalid entry");
+    } else {
+      firstNumber += ".";
+      display.innerHTML = firstNumber;
+      inAfterEqual = false;
+      inFirstNumber = true;
+    }
   }
 }
 
 function plus() {
-  if (inFirstNumber === true) {
-    inFirstNumber = false;
+  if (inFirstNumber) {
     operation = "plus";
-  } else {
+    inFirstNumber = false;
+    inTransition = true;
+  } else if (inSecondNumber) {
     equal();
     operation = "plus";
-    inFirstNumber = false;
+    inSecondNumber = false;
+    inTransition = true;
+  } else if (inAfterEqual) {
+    operation = "plus";
+    inAfterEqual = false;
+    inTransition = true;
   }
-  afterEqual = false;
 }
 
 function minus() {
-  if (inFirstNumber === true) {
-    inFirstNumber = false;
+  if (inFirstNumber) {
     operation = "minus";
-  } else {
+    inFirstNumber = false;
+  } else if (inSecondNumber) {
     equal();
     operation = "minus";
-    inFirstNumber = false;
+    inSecondNumber = false;
+  } else if (inAfterEqual) {
+    operation = "minus";
+    inAfterEqual = false;
   }
-  afterEqual = false;
+  inTransition = true;
+  console.log(firstNumber, secondNumber);
 }
 
 function multiply() {
-  if (inFirstNumber === true) {
-    inFirstNumber = false;
+  if (inFirstNumber) {
     operation = "multiply";
-  } else {
+    inFirstNumber = false;
+    inTransition = true;
+  } else if (inSecondNumber) {
     equal();
     operation = "multiply";
-    inFirstNumber = false;
+    inSecondNumber = false;
+    inTransition = true;
+  } else if (inAfterEqual) {
+    operation = "multiply";
+    inAfterEqual = false;
+    inTransition = true;
   }
-  afterEqual = false;
 }
 
 function divide() {
-  if (inFirstNumber === true) {
-    inFirstNumber = false;
+  if (inFirstNumber) {
     operation = "divide";
-  } else {
+    inFirstNumber = false;
+    inTransition = true;
+  } else if (inSecondNumber) {
     equal();
     operation = "divide";
-    inFirstNumber = false;
+    inSecondNumber = false;
+    inTransition = true;
+  } else if (inAfterEqual) {
+    operation = "divide";
+    inAfterEqual = false;
+    inTransition = true;
   }
-  afterEqual = false;
 }
 
 function equal() {
-  if (operation === "plus") {
-    firstNumber = (Number(firstNumber) + Number(secondNumber)).toFixed(10);
-  } else if (operation === "minus") {
-    firstNumber = (Number(firstNumber) - Number(secondNumber)).toFixed(10);
-  } else if (operation === "multiply") {
-    firstNumber = (Number(firstNumber) * Number(secondNumber)).toFixed(10);
-  } else if (operation === "divide") {
-    firstNumber = (Number(firstNumber) / Number(secondNumber)).toFixed(10);
+  if (inSecondNumber && operation != "") {
+    if (operation === "plus") {
+      firstNumber = toStringToNumberToString(
+        Number(firstNumber) + Number(secondNumber)
+      );
+    } else if (operation === "minus") {
+      firstNumber = toStringToNumberToString(
+        Number(firstNumber) - Number(secondNumber)
+      );
+    } else if (operation === "multiply") {
+      firstNumber = toStringToNumberToString(
+        Number(firstNumber) * Number(secondNumber)
+      );
+    } else if (operation === "divide") {
+      firstNumber = toStringToNumberToString(
+        Number(firstNumber) / Number(secondNumber)
+      );
+    }
+    display.innerHTML = firstNumber;
+    secondNumber = "";
+    operation = "";
+    inSecondNumber = false;
+    inAfterEqual = true;
   }
-  display.innerHTML = firstNumber;
-  secondNumber = "";
-  operation = "";
-  inFirstNumber = true;
-  afterEqual = true;
 }
 
 function number() {
-  if (afterEqual === true) {
+  if (inAfterEqual) {
     firstNumber = "";
-    afterEqual = false;
+    inAfterEqual = false;
+    inFirstNumber = true;
+  }
+  if (inFirstNumber && firstNumber === "0") {
+    firstNumber = "";
+  }
+  if (inSecondNumber && secondNumber === "0") {
+    secondNumber = "";
+  }
+  if (inTransition) {
+    inTransition = false;
+    inSecondNumber = true;
   }
 }
 
 function ac() {
-  firstNumber = "";
+  firstNumber = "0";
   secondNumber = "";
   operation = "";
   inFirstNumber = true;
-  display.innerHTML = 0;
+  inAfterEqual = false;
+  inSecondNumber = false;
+  inTransition = false;
+  display.innerHTML = firstNumber;
 }
 
 function sign() {
-  if (inFirstNumber && Number(firstNumber) > 0) {
+  if ((inFirstNumber || inAfterEqual) && Number(firstNumber) > 0) {
     firstNumber = "-" + firstNumber;
     display.innerHTML = firstNumber;
-  } else if (inFirstNumber && Number(firstNumber) < 0) {
+  } else if ((inFirstNumber || inAfterEqual) && Number(firstNumber) < 0) {
     firstNumber = firstNumber.substring(1);
     display.innerHTML = firstNumber;
-  } else if (!inFirstNumber && Number(secondNumber) > 0) {
+  } else if (inSecondNumber && Number(secondNumber) > 0) {
     secondNumber = "-" + secondNumber;
     display.innerHTML = secondNumber;
-  } else if (!inFirstNumber && Number(secondNumber) < 0) {
+  } else if (inSecondNumber && Number(secondNumber) < 0) {
     secondNumber = secondNumber.substring(1);
     display.innerHTML = secondNumber;
   }
 }
+
+function percentage() {
+  if (inFirstNumber || inAfterEqual) {
+    firstNumber = toStringToNumberToString(Number(firstNumber) / 100);
+    display.innerHTML = firstNumber;
+  } else if (inSecondNumber) {
+    secondNumber = toStringToNumberToString(Number(secondNumber) / 100);
+    display.innerHTML = secondNumber;
+  }
+}
+
 function number0() {
-  if (inFirstNumber && firstNumber) {
+  if (inFirstNumber) {
     firstNumber += "0";
     display.innerHTML = firstNumber;
-  } else if (inFirstNumber === false && secondNumber) {
+  } else if ((inSecondNumber || inTransition) && secondNumber != "0") {
     secondNumber += "0";
     display.innerHTML = secondNumber;
   }
@@ -142,7 +204,7 @@ function number1() {
   if (inFirstNumber) {
     firstNumber += "1";
     display.innerHTML = firstNumber;
-  } else {
+  } else if (inSecondNumber) {
     secondNumber += "1";
     display.innerHTML = secondNumber;
   }
