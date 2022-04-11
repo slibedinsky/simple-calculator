@@ -1,0 +1,131 @@
+
+body, html{
+    height: 100vh;
+}
+
+body{
+    margin:0;
+    text-align: center;
+}
+
+#display{
+    box-sizing: border-box;
+    font-family: Arial,Helvetica,sans-serif;
+    padding: 35px 30px 10px;
+    width: 380px;
+    height: 120px;
+    background-color: black;
+    color: white;
+    font-size: 50px;
+    text-align: right;
+}
+.grid-container {
+    padding:10px;
+    display: grid;
+    width: 360px;
+    height: 460px;
+    grid-template-areas:
+        'ac plusminus percentage divide'
+        'seven eigth nine multiplyx'
+        'four five six minus'
+        'one two three plus'
+        'zerox zerox dotx equal';
+    gap: 12px;
+    background-color: black;
+}
+
+button{
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 37px;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.greybutton{
+        background-color: rgb(50, 50, 50);
+        color: white;
+}
+
+.orange{
+    background-color: rgb(246,153,6);
+    color: white;
+}
+
+.lightgrey{
+    background-color: rgb(160,160,160);
+    color: black;
+}
+.item1{ 
+    grid-area: one;
+}
+.item2 {
+    grid-area: two;
+}
+.item3 {
+    grid-area: three;
+}
+.item4 {
+    grid-area: four;
+}
+.item5 {
+    grid-area: five;
+}
+.item6 {
+    grid-area: six;
+}
+.item7 {
+    grid-area: seven;
+}
+.item8 {
+    grid-area: eigth;
+}
+.item9 {
+    grid-area: nine;
+}
+.item10{
+    grid-area: zerox;
+   
+}
+
+.zero{
+    width: 170px;
+    border-radius: 30%;
+}
+.item11 {
+    grid-area: dotx;
+}
+.item12{
+    grid-area: ac;
+}
+.item13{
+    grid-area: plusminus;
+}
+.item14{
+    grid-area: percentage;
+}
+.item15{
+    grid-area: divide;
+}
+.item16{
+    grid-area: minus;
+}
+.item17 {
+    grid-area: multiplyx;
+}
+
+.item18 {
+    grid-area: plus;
+}
+
+.item19 {
+    grid-area:equal;
+}
+
+
