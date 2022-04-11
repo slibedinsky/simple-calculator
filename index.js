@@ -83,13 +83,13 @@ function divide() {
 
 function equal() {
   if (operation === "plus") {
-    firstNumber = (Number(firstNumber) + Number(secondNumber)).toString();
+    firstNumber = (Number(firstNumber) + Number(secondNumber)).toFixed(10);
   } else if (operation === "minus") {
-    firstNumber = (Number(firstNumber) - Number(secondNumber)).toString();
+    firstNumber = (Number(firstNumber) - Number(secondNumber)).toFixed(10);
   } else if (operation === "multiply") {
-    firstNumber = (Number(firstNumber) * Number(secondNumber)).toString();
+    firstNumber = (Number(firstNumber) * Number(secondNumber)).toFixed(10);
   } else if (operation === "divide") {
-    firstNumber = (Number(firstNumber) / Number(secondNumber)).toString();
+    firstNumber = (Number(firstNumber) / Number(secondNumber)).toFixed(10);
   }
   display.innerHTML = firstNumber;
   secondNumber = "";
