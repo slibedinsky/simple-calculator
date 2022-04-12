@@ -6,6 +6,22 @@ let inFirstNumber = true;
 let inSecondNumber = false;
 let inTransition = false;
 let inAfterEqual = false;
+// console.log(
+//   "first: ",
+//   firstNumber,
+//   "second: ",
+//   secondNumber,
+//   "operation: ",
+//   operation,
+//   "inFirstNumber: ",
+//   inFirstNumber,
+//   "inSecondNumber: ",
+//   inSecondNumber,
+//   "inTransition: ",
+//   inTransition,
+//   "inAfterEqual: ",
+//   inAfterEqual
+// );
 
 display.innerHTML = firstNumber;
 
@@ -49,7 +65,7 @@ function plus() {
   } else if (inSecondNumber) {
     equal();
     operation = "plus";
-    inSecondNumber = false;
+    inAfterEqual = false;
     inTransition = true;
   } else if (inAfterEqual) {
     operation = "plus";
@@ -65,13 +81,12 @@ function minus() {
   } else if (inSecondNumber) {
     equal();
     operation = "minus";
-    inSecondNumber = false;
+    inAfterEqual = false;
   } else if (inAfterEqual) {
     operation = "minus";
     inAfterEqual = false;
   }
   inTransition = true;
-  console.log(firstNumber, secondNumber);
 }
 
 function multiply() {
@@ -82,13 +97,29 @@ function multiply() {
   } else if (inSecondNumber) {
     equal();
     operation = "multiply";
-    inSecondNumber = false;
+    inAfterEqual = false;
     inTransition = true;
   } else if (inAfterEqual) {
     operation = "multiply";
     inAfterEqual = false;
     inTransition = true;
   }
+  console.log(
+    "first: ",
+    firstNumber,
+    "second: ",
+    secondNumber,
+    "operation: ",
+    operation,
+    "inFirstNumber: ",
+    inFirstNumber,
+    "inSecondNumber: ",
+    inSecondNumber,
+    "inTransition: ",
+    inTransition,
+    "inAfterEqual: ",
+    inAfterEqual
+  );
 }
 
 function divide() {
@@ -99,7 +130,7 @@ function divide() {
   } else if (inSecondNumber) {
     equal();
     operation = "divide";
-    inSecondNumber = false;
+    inAfterEqual = false;
     inTransition = true;
   } else if (inAfterEqual) {
     operation = "divide";
@@ -109,7 +140,7 @@ function divide() {
 }
 
 function equal() {
-  if (inSecondNumber && operation != "") {
+  if (inSecondNumber && operation) {
     if (operation === "plus") {
       firstNumber = toStringToNumberToString(
         Number(firstNumber) + Number(secondNumber)
